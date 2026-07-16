@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2-Player Chess - V1</title>
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cm-chessboard@8.12.12/assets/chessboard.css" />
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cm-chessboard@8.12.12/assets/extensions/arrows/arrows.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cm-chessboard@8.12.12/assets/extensions/markers/markers.css" />
+  
+  <link rel="stylesheet" href="./style.css" />
+
+  <script type="importmap">
+    {
+      "imports": {
+        "chess.js": "https://cdn.jsdelivr.net/npm/chess.js@1.0.0-beta.8/+esm",
+        "cm-chessboard/": "https://cdn.jsdelivr.net/npm/cm-chessboard@8.12.12/"
+      }
+    }
+  </script>
+</head>
+<body>
+
+  <h1>2-Player Chess</h1>
+  <div id="board"></div>
+  <div class="status-container" id="status">White's Turn</div>
+
+  <script type="module" src="./src/main.js"></script>
+
+</body>
+</html>
