@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>2-Player Chess - V1</title>
+  <title>Chess App</title>
   
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cm-chessboard@8.12.12/assets/chessboard.css" />
-  
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cm-chessboard@8.12.12/assets/extensions/arrows/arrows.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cm-chessboard@8.12.12/assets/extensions/markers/markers.css" />
-  
   <link rel="stylesheet" href="./style.css" />
+
+  <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
 
   <script type="importmap">
     {
@@ -23,9 +23,38 @@
 </head>
 <body>
 
-  <h1>2-Player Chess</h1>
-  <div id="board"></div>
-  <div class="status-container" id="status">White's Turn</div>
+  <div id="landing-screen" class="screen active">
+    <h1>Welcome to Chess</h1>
+    <div class="landing-buttons">
+      <button id="btn-offline">Play Offline (Local)</button>
+      <button id="btn-online">Create/Join Online Game</button>
+    </div>
+  </div>
+
+  <div id="app-screen" class="screen">
+    
+    <div class="top-bar">
+      <h1 id="app-title">Chess</h1>
+      <div class="dropdown-wrapper">
+        <button id="hamburger-btn" class="icon-btn">☰</button>
+        <div id="dropdown-menu" class="dropdown-content hidden">
+          <button id="flip-board-btn">Flip Board</button>
+          </div>
+      </div>
+    </div>
+
+    <div class="menu-container hidden" id="network-menu">
+      <button id="host-btn">Host New Game</button>
+      <div class="join-area">
+        <input type="text" id="join-id" placeholder="Enter Game ID..." />
+        <button id="join-btn">Join Game</button>
+      </div>
+      <div id="game-info" class="game-info">Not Connected</div>
+    </div>
+
+    <div id="board"></div>
+    <div class="status-container" id="status">Starting game...</div>
+  </div>
 
   <script type="module" src="./src/main.js"></script>
 
