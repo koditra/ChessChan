@@ -7,40 +7,48 @@ const chess = new Chess();
 const statusEl = document.getElementById("status");
 const gameInfoEl = document.getElementById("game-info");
 
-let gameMode = 'none';
+// State
+let gameMode = 'none'; // 'offline' or 'online'
 let myColor = COLOR.white; 
 let isConnected = false;
 let peerConnection = null;
 const peer = new Peer();
 
+// UI Elements
 const landingScreen = document.getElementById("landing-screen");
 const appScreen = document.getElementById("app-screen");
 const networkMenu = document.getElementById("network-menu");
 const appTitle = document.getElementById("app-title");
 const dropdownMenu = document.getElementById("dropdown-menu");
 
+// Initialize Board
 const board = new Chessboard(document.getElementById("board"), {
   position: chess.fen(),
   assetsUrl: "https://cdn.jsdelivr.net/npm/cm-chessboard@8.12.12/assets/",
   extensions: [{ class: Markers }, { class: Arrows }]
 });
 
+
+// Hamburger Menu Toggle
 document.getElementById("hamburger-btn").addEventListener("click", () => {
   dropdownMenu.classList.toggle("hidden");
 });
 
+// Close dropdown if clicked outside
 document.addEventListener("click", (e) => {
   if (!e.target.closest(".dropdown-wrapper")) {
     dropdownMenu.classList.add("hidden");
   }
 });
 
+// Flip Board Button
 document.getElementById("flip-board-btn").addEventListener("click", () => {
   const currentOri = board.getOrientation();
   board.setOrientation(currentOri === COLOR.white ? COLOR.black : COLOR.white, true);
   dropdownMenu.classList.add("hidden"); // close menu after clicking
 });
 
+// Start Offline Game
 document.getElementById("btn-offline").addEventListener("click", () => {
   gameMode = 'offline';
   landingScreen.classList.remove("active");
@@ -49,6 +57,7 @@ document.getElementById("btn-offline").addEventListener("click", () => {
   updateStatus();
 });
 
+// Start Online Flow
 document.getElementById("btn-online").addEventListener("click", () => {
   gameMode = 'online';
   landingScreen.classList.remove("active");
@@ -58,6 +67,8 @@ document.getElementById("btn-online").addEventListener("click", () => {
   updateStatus();
 });
 
+
+// Game Logic below
 
 function updateStatus() {
   if (gameMode === 'online' && !isConnected) {
@@ -106,12 +117,20 @@ function inputHandler(event) {
 
     case INPUT_EVENT_TYPE.moveInputFinished:
       board.setPosition(chess.fen(), true);
-      updateStatus();
-      
-      if (gameMode === 'online' && peerConnection) {
-        peerConnection.send(chess.fen());
+
+      if (gameMode === "offline") {
+        board.setOrientation(
+          chess.turn() === "w" ? COLOR.white : COLOR.black,
+          true
+        );
       }
-      break;
+
+  updateStatus();
+
+  if (gameMode === "online" && peerConnection) {
+    peerConnection.send(chess.fen());
+  }
+  break;
   }
 }
 
