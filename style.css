@@ -1,20 +1,22 @@
 body {
-  background-color: #1a1a1a;
-  color: #ffffff;
-  font-family: system-ui, sans-serif;
   margin: 0;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+
+  background: #1a1a1a;
+  color: white;
+  font-family: system-ui, sans-serif;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 h1 {
   margin: 0;
 }
 
-/* Screen Management */
 .screen {
   display: none;
   flex-direction: column;
@@ -25,19 +27,6 @@ h1 {
   display: flex;
 }
 
-/* Landing Page */
-.landing-buttons {
-  margin-top: 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-.landing-buttons button {
-  padding: 15px 30px;
-  font-size: 1.1rem;
-}
-
-/* Top Bar & Hamburger Menu */
 .top-bar {
   display: flex;
   justify-content: space-between;
@@ -46,17 +35,21 @@ h1 {
   max-width: 90vw;
   margin-bottom: 15px;
 }
+
 .icon-btn {
   background: transparent;
   font-size: 1.5rem;
   padding: 5px 10px;
 }
+
 .icon-btn:hover {
   background: #333;
 }
+
 .dropdown-wrapper {
   position: relative;
 }
+
 .dropdown-content {
   position: absolute;
   top: 100%;
@@ -69,9 +62,14 @@ h1 {
   z-index: 10;
   overflow: hidden;
 }
+
 .dropdown-content.hidden {
-  display: none;
+  display: block;
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
 }
+
 .dropdown-content button {
   width: 100%;
   background: none;
@@ -79,11 +77,11 @@ h1 {
   border-radius: 0;
   padding: 12px 16px;
 }
+
 .dropdown-content button:hover {
   background-color: #444;
 }
 
-/* General UI */
 .menu-container {
   background-color: #2a2a2a;
   padding: 15px;
@@ -97,16 +95,25 @@ h1 {
   max-width: 90vw;
   box-sizing: border-box;
 }
-.menu-container.hidden {
-  display: none;
-}
-.join-area { display: flex; gap: 10px; }
-input { flex-grow: 1; padding: 8px; background: #1a1a1a; border: 1px solid #555; color: white; border-radius: 4px; }
-button { padding: 8px 16px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.2s;}
-button:hover { background-color: #45a049; }
-.game-info { font-size: 0.9rem; color: #aaa; text-align: center; }
 
-/* Board */
+.menu-container.hidden {
+
+  display: none;
+
+}
+
+.join-area { 
+
+  display: flex; gap: 10px; 
+
+}
+
+.game-info { 
+
+  font-size: 0.9rem; color: #aaa; text-align: center; 
+
+}
+
 #board {
   width: 450px;
   max-width: 90vw;
@@ -126,4 +133,67 @@ button:hover { background-color: #45a049; }
   max-width: 90vw;
   box-sizing: border-box;
   text-align: center;
+}
+
+#landing-screen {
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+}
+
+#landing-screen h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+#app-title {
+  font-size: 2rem;
+}
+
+.landing-buttons {
+  margin-top: 40px;
+  width: 100%;
+  gap: 18px;
+}
+
+.landing-buttons button {
+  width: 100%;
+  padding: 18px;
+  font-size: 1.15rem;
+}
+
+input {
+  flex: 1;
+  padding: 10px 12px;
+
+  background: #181818;
+  color: white;
+
+  border: 1px solid #444;
+  border-radius: 8px;
+
+  outline: none;
+}
+
+input:focus {
+  border-color: #3d8bfd;
+}
+
+@media (max-width: 500px) {
+
+  body {
+    padding: 15px;
+  }
+
+  .top-bar,
+  .menu-container,
+  .status-container,
+  #board {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  #landing-screen h1 {
+    font-size: 2.2rem;
+  }
 }
