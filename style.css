@@ -14,25 +14,34 @@ body {
 }
 
 h1 {
+
   margin: 0;
+
 }
 
 .screen {
   display: none;
+
   flex-direction: column;
   align-items: center;
+
   width: 100%;
 }
+
 .screen.active {
+
   display: flex;
+
 }
 
 .top-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   width: 450px;
   max-width: 90vw;
+
   margin-bottom: 15px;
 }
 
@@ -46,51 +55,19 @@ h1 {
   background: #333;
 }
 
-.dropdown-wrapper {
-  position: relative;
-}
-
-.dropdown-content {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background-color: #2a2a2a;
-  min-width: 150px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.5);
-  border-radius: 8px;
-  border: 1px solid #444;
-  z-index: 10;
-  overflow: hidden;
-}
-
-.dropdown-content.hidden {
-  display: block;
-  opacity: 0;
-  transform: translateY(-8px);
-  pointer-events: none;
-}
-
-.dropdown-content button {
-  width: 100%;
-  background: none;
-  text-align: left;
-  border-radius: 0;
-  padding: 12px 16px;
-}
-
-.dropdown-content button:hover {
-  background-color: #444;
-}
-
 .menu-container {
   background-color: #2a2a2a;
+
   padding: 15px;
   border-radius: 8px;
   margin-bottom: 20px;
+
   display: flex;
   flex-direction: column;
+
   gap: 10px;
   border: 1px solid #3a3a3a;
+
   width: 450px;
   max-width: 90vw;
   box-sizing: border-box;
@@ -117,48 +94,63 @@ h1 {
 #board {
   width: 450px;
   max-width: 90vw;
+
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+
   border-radius: 4px;
   overflow: hidden;
 }
 .status-container {
   margin-top: 20px;
+
   font-size: 1.25rem;
   font-weight: 600;
+
   background-color: #2a2a2a;
   padding: 10px 20px;
+
   border-radius: 8px;
   border: 1px solid #3a3a3a;
+
   width: 450px;
   max-width: 90vw;
+
   box-sizing: border-box;
+
   text-align: center;
 }
 
 #landing-screen {
   width: 100%;
   max-width: 600px;
+
   text-align: center;
 }
 
 #landing-screen h1 {
   font-size: 3rem;
+
   margin-bottom: 10px;
 }
 
 #app-title {
+
   font-size: 2rem;
+
 }
 
 .landing-buttons {
   margin-top: 40px;
+
   width: 100%;
   gap: 18px;
 }
 
 .landing-buttons button {
   width: 100%;
+
   padding: 18px;
+
   font-size: 1.15rem;
 }
 
@@ -176,7 +168,9 @@ input {
 }
 
 input:focus {
+
   border-color: #3d8bfd;
+
 }
 
 @media (max-width: 500px) {
@@ -186,14 +180,62 @@ input:focus {
   }
 
   .top-bar,
+
   .menu-container,
+
   .status-container,
+
   #board {
     width: 100%;
     max-width: 100%;
   }
 
   #landing-screen h1 {
+
     font-size: 2.2rem;
+
   }
+}
+
+.dropdown-wrapper {
+
+  position: relative;
+
+}
+
+.dropdown-content {
+  position: absolute;
+
+  top: 100%;
+  right: 0;
+
+  background-color: #2a2a2a;
+
+  min-width: 150px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+
+  border-radius: 8px;
+  border: 1px solid #444;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.dropdown-content.hidden {
+  display: none;
+}
+
+.dropdown-content button {
+  width: 100%;
+
+  background: none;
+  text-align: left;
+
+  border-radius: 0;
+  padding: 12px 16px;
+}
+
+.dropdown-content button:hover {
+
+  background-color: #444;
+  
 }
