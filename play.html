@@ -32,6 +32,7 @@
 
   <div class="app-container">
 
+    <!-- Landing Screen -->
     <div id="landing-screen" class="screen active">
 
       <h1>Chess</h1>
@@ -54,6 +55,7 @@
 
     </div>
 
+    <!-- Game Screen -->
     <div id="app-screen" class="screen">
 
       <div class="top-bar">
@@ -66,8 +68,16 @@
             src="https://placehold.co/48x48"
             alt="Profile Picture">
 
-          <div class="player-text">
-            <span id="user-name">Loading...</span>
+          <div class="player-details">
+
+            <div id="user-name" class="player-name">
+              Loading...
+            </div>
+
+            <div id="app-title" class="player-mode">
+              Chess
+            </div>
+
           </div>
 
         </div>
@@ -129,9 +139,11 @@
       <div id="board"></div>
 
       <div class="status-container">
+
         <span id="status">
           Starting game...
         </span>
+
       </div>
 
     </div>
