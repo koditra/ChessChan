@@ -333,3 +333,27 @@ input:focus {
     flex-direction: column;
   }
 }
+
+.player-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.player-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border);
+}
+
+.player-text {
+  display: flex;
+  flex-direction: column;
+}
+
+#user-name {
+  font-size: 1.15rem;
+  font-weight: 600;
+}
