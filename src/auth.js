@@ -43,5 +43,5 @@ onAuthStateChanged(auth, (user) => {
 
     console.log("Logged in as:", user.displayName ?? "Guest");
 
-    window.location.href = "index.html";
+    window.location.href = "play.html";
 });
