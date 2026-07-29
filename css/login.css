@@ -1,9 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap");
 
 :root {
   --bg: #171717;
   --panel: #252525;
-  --panel-light: #2f2f2f;
   --border: #3a3a3a;
 
   --green: #58c85b;
@@ -18,22 +17,113 @@
   --muted: #a8a8a8;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  padding: 24px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background:
+    radial-gradient(circle at top, #2b2b2b 0%, #171717 65%);
+
+  font-family: "Fredoka", sans-serif;
+  color: var(--text);
+}
+
+.app-container {
+  width: 430px;
+  max-width: 100%;
+
+  padding: 42px 34px;
+
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  box-shadow:
+    0 22px 55px rgba(0, 0, 0, .45);
+}
+
+.logo {
+  width: 110px;
+  height: 110px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 3.5rem;
+
+  border-radius: 30px;
+
+  background:
+    linear-gradient(
+      to bottom,
+      var(--green-light),
+      var(--green)
+    );
+
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.35),
+    inset 0 -3px 0 rgba(0,0,0,.12),
+    0 8px 0 var(--green-dark),
+    0 18px 35px rgba(0,0,0,.35);
+
+  margin-bottom: 26px;
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 1.05rem;
+  margin-bottom: 36px;
+}
+
+.login-buttons {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
 button {
   --button: var(--green);
   --button-light: var(--green-light);
   --button-dark: var(--green-dark);
 
-  font-family: inherit;
-  font-size: 1rem;
-  font-weight: 600;
-  color: white;
+  width: 100%;
 
   border: none;
-  cursor: pointer;
   outline: none;
+  cursor: pointer;
 
-  padding: 14px 24px;
+  padding: 18px;
+
   border-radius: 18px;
+
+  color: white;
+  font-family: inherit;
+  font-size: 1.08rem;
+  font-weight: 600;
 
   background:
     linear-gradient(
@@ -46,7 +136,7 @@ button {
     inset 0 2px 0 rgba(255,255,255,.35),
     inset 0 -3px 0 rgba(0,0,0,.12),
     0 7px 0 var(--button-dark),
-    0 12px 25px rgba(0,0,0,.35);
+    0 14px 28px rgba(0,0,0,.35);
 
   transition:
     transform .15s cubic-bezier(.2,.8,.2,1),
@@ -65,7 +155,7 @@ button:hover {
     inset 0 2px 0 rgba(255,255,255,.4),
     inset 0 -3px 0 rgba(0,0,0,.12),
     0 9px 0 var(--button-dark),
-    0 18px 30px rgba(0,0,0,.45);
+    0 18px 34px rgba(0,0,0,.42);
 }
 
 button:active {
@@ -77,82 +167,56 @@ button:active {
     inset 0 2px 0 rgba(255,255,255,.3),
     inset 0 -2px 0 rgba(0,0,0,.1),
     0 1px 0 var(--button-dark),
-    0 4px 10px rgba(0,0,0,.25);
+    0 4px 12px rgba(0,0,0,.28);
 }
 
 button:focus-visible {
   outline: 3px solid rgba(120,170,255,.8);
-  outline-offset: 3px;
+  outline-offset: 4px;
 }
 
-#btn-online {
+.google-btn {
   --button: var(--blue);
   --button-light: var(--blue-light);
   --button-dark: var(--blue-dark);
 }
 
-.landing-buttons button {
-  width: 100%;
-  padding: 18px;
-  font-size: 1.15rem;
+.guest-btn {
+  --button: var(--green);
+  --button-light: var(--green-light);
+  --button-dark: var(--green-dark);
 }
 
-.icon-btn {
-  width: 50px;
-  height: 50px;
-  padding: 0;
-  font-size: 1.4rem;
-  border-radius: 14px;
+.small-text {
+  margin-top: 28px;
+  color: var(--muted);
+  font-size: .92rem;
+  line-height: 1.5;
 }
 
-.app-container{
-    width:100%;
-    max-width:480px;
+@media (max-width: 500px) {
+  body {
+    padding: 16px;
+  }
 
-    padding:40px;
+  .app-container {
+    padding: 34px 24px;
+    border-radius: 22px;
+  }
 
-    background:#232323;
+  .logo {
+    width: 90px;
+    height: 90px;
+    font-size: 3rem;
+    border-radius: 24px;
+  }
 
-    border:2px solid #343434;
-    border-radius:28px;
+  h1 {
+    font-size: 2.4rem;
+  }
 
-    box-shadow:
-        0 25px 60px rgba(0,0,0,.45);
-}
-
-.logo{
-    font-size:5rem;
-    text-align:center;
-    margin-bottom:10px;
-}
-
-.subtitle{
-    color:#bcbcbc;
-    text-align:center;
-    margin-bottom:35px;
-}
-
-.login-buttons{
-    display:flex;
-    flex-direction:column;
-    gap:18px;
-}
-
-.google-btn{
-    --button:#5a92ff;
-    --button-light:#80adff;
-    --button-dark:#3769cf;
-}
-
-.guest-btn{
-    --button:#58c85b;
-    --button-light:#7be87e;
-    --button-dark:#3f9d42;
-}
-
-.small-text{
-    margin-top:25px;
-    text-align:center;
-    color:#999;
-    font-size:.9rem;
+  button {
+    padding: 16px;
+    font-size: 1rem;
+  }
 }
