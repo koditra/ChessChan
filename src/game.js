@@ -1,5 +1,14 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+import {
+  getAuth,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+import {
+  getAuth,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDpHGytH7ZMjNcSGM45ujLxu5LrTHf3jlg",
@@ -20,16 +29,19 @@ onAuthStateChanged(auth, (user) => {
     return;
   }
 
-  document.getElementById("user-name").textContent =
-    user.displayName || "Guest";
+  const name = user.displayName || "Guest";
+  const photo = user.photoURL || "https://placehold.co/48x48?text=G";
 
-  const avatar = document.getElementById("user-avatar");
+  document.getElementById("user-name").textContent = name;
+  document.getElementById("user-name-home").textContent = name;
 
-  if (user.photoURL) {
-    avatar.src = user.photoURL;
-  } else {
-    avatar.src = "https://placehold.co/48x48?text=G";
-  }
+  document.getElementById("user-avatar").src = photo;
+  document.getElementById("user-avatar-home").src = photo;
+});
+
+document.getElementById("logout-btn")?.addEventListener("click", async () => {
+  await signOut(auth);
+  window.location.href = "login.html";
 });
 
 import { Chess } from "chess.js";
