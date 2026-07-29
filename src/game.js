@@ -1,3 +1,37 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDpHGytH7ZMjNcSGM45ujLxu5LrTHf3jlg",
+  authDomain: "chesschan-8f1bf.firebaseapp.com",
+  projectId: "chesschan-8f1bf",
+  storageBucket: "chesschan-8f1bf.firebasestorage.app",
+  messagingSenderId: "24274267038",
+  appId: "1:24274267038:web:7e1b3603f28d5499d1448f",
+  measurementId: "G-4XGRYGC75W"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  document.getElementById("user-name").textContent =
+    user.displayName || "Guest";
+
+  const avatar = document.getElementById("user-avatar");
+
+  if (user.photoURL) {
+    avatar.src = user.photoURL;
+  } else {
+    avatar.src = "https://placehold.co/48x48?text=G";
+  }
+});
+
 import { Chess } from "chess.js";
 import { Chessboard, INPUT_EVENT_TYPE, COLOR } from "cm-chessboard/src/Chessboard.js";
 import { Arrows } from "cm-chessboard/src/extensions/arrows/Arrows.js";
