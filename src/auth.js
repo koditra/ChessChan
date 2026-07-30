@@ -22,21 +22,27 @@ const auth = getAuth(app);
 
 const googleProvider = new GoogleAuthProvider();
 
-document.getElementById("google-login").addEventListener("click", async () => {
-    try {
-        await signInWithPopup(auth, googleProvider);
-    } catch (err) {
-        alert(err.message);
-    }
-});
+const googleLoginBtn = document.getElementById("google-login");
+if (googleLoginBtn) {
+    googleLoginBtn.addEventListener("click", async () => {
+        try {
+            await signInWithPopup(auth, googleProvider);
+        } catch (err) {
+            alert(err.message);
+        }
+    });
+}
 
-document.getElementById("guest-login").addEventListener("click", async () => {
-    try {
-        await signInAnonymously(auth);
-    } catch (err) {
-        alert(err.message);
-    }
-});
+const guestLoginBtn = document.getElementById("guest-login");
+if (guestLoginBtn) {
+    guestLoginBtn.addEventListener("click", async () => {
+        try {
+            await signInAnonymously(auth);
+        } catch (err) {
+            alert(err.message);
+        }
+    });
+}
 
 onAuthStateChanged(auth, (user) => {
     if (!user) return;
