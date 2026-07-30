@@ -23,24 +23,66 @@ const userNameHomeEl = document.getElementById("user-name-home");
 const userAvatarEl = document.getElementById("user-avatar");
 const userAvatarHomeEl = document.getElementById("user-avatar-home");
 
-onAuthStateChanged(auth, (user) => {
-  if (!user) {
-    window.location.href = "index.html";
-    return;
-  }
+function setProfileCookie(profile) {
+  const value = encodeURIComponent(JSON.stringify(profile));
+  document.cookie = `chesschan-profile=${value}; path=/; max-age=31536000; SameSite=Lax`;
+}
 
-  const name = user.displayName || "Guest";
-  const photo = user.photoURL || "https://placehold.co/48x48?text=G";
+function readProfileCookie() {
+  const cookies = document.cookie.split(";").map((item) => item.trim());
+  const entry = cookies.find((item) => item.startsWith("chesschan-profile="));
+
+  if (!entry) return null;
+
+  try {
+    return JSON.parse(decodeURIComponent(entry.split("=")[1]));
+  } catch (error) {
+    return null;
+  }
+}
+
+function clearProfileCookie() {
+  document.cookie = "chesschan-profile=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+}
+
+function applyProfile(profile) {
+  const name = profile?.name || profile?.displayName || "Guest";
+  const photo = profile?.photo || profile?.photoURL || "https://placehold.co/48x48?text=G";
 
   if (userNameEl) userNameEl.textContent = name;
   if (userNameHomeEl) userNameHomeEl.textContent = name;
   if (userAvatarEl) userAvatarEl.src = photo;
   if (userAvatarHomeEl) userAvatarHomeEl.src = photo;
+}
+
+const savedProfile = readProfileCookie();
+if (savedProfile) {
+  applyProfile(savedProfile);
+}
+
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    if (savedProfile) {
+      applyProfile(savedProfile);
+    } else {
+      window.location.href = "index.html";
+    }
+    return;
+  }
+
+  const profile = {
+    name: user.displayName || user.email?.split("@")[0] || "Guest",
+    photo: user.photoURL || "https://placehold.co/48x48?text=G"
+  };
+
+  setProfileCookie(profile);
+  applyProfile(profile);
 });
 
 const logoutBtn = document.getElementById("logout-btn");
 if (logoutBtn) {
   logoutBtn.addEventListener("click", async () => {
+    clearProfileCookie();
     await signOut(auth);
     window.location.href = "index.html";
   });
@@ -49,6 +91,7 @@ if (logoutBtn) {
 const logoutBtnGame = document.getElementById("logout-btn-game");
 if (logoutBtnGame) {
   logoutBtnGame.addEventListener("click", async () => {
+    clearProfileCookie();
     await signOut(auth);
     window.location.href = "index.html";
   });
@@ -63,21 +106,21 @@ const chess = new Chess();
 const statusEl = document.getElementById("status");
 const gameInfoEl = document.getElementById("game-info");
 
-// State
-let gameMode = 'none'; // 'offline' or 'online'
+//state
+let gameMode = 'none'; 
 let myColor = COLOR.white; 
 let isConnected = false;
 let peerConnection = null;
 const peer = new Peer();
 
-// UI Elements
+//ui
 const landingScreen = document.getElementById("landing-screen");
 const appScreen = document.getElementById("app-screen");
 const networkMenu = document.getElementById("network-menu");
 const appTitle = document.getElementById("app-title");
 const dropdownMenu = document.getElementById("dropdown-menu");
 
-// Initialize Board
+//init board
 const board = new Chessboard(document.getElementById("board"), {
   position: chess.fen(),
   assetsUrl: "https://cdn.jsdelivr.net/npm/cm-chessboard@8.12.12/assets/",
@@ -85,26 +128,47 @@ const board = new Chessboard(document.getElementById("board"), {
 });
 
 
-// Hamburger Menu Toggle
+document.addEventListener("keydown", (event) => {
+  const isBackShortcut =
+    (event.ctrlKey || event.metaKey || event.altKey) && event.key === "ArrowLeft" ||
+    event.code === "Backquote" ||
+    event.key === "`" ||
+    event.key === "~";
+
+  if (isBackShortcut) {
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+  }
+});
+
+const profileButtonHome = document.getElementById("profile-btn-home");
+const profileMenuHome = document.getElementById("profile-menu-home");
+
+if (profileButtonHome && profileMenuHome) {
+  profileButtonHome.addEventListener("click", () => {
+    profileMenuHome.classList.toggle("hidden");
+  });
+}
+
+// hamburg menu
 document.getElementById("hamburger-btn").addEventListener("click", () => {
   dropdownMenu.classList.toggle("hidden");
 });
 
-// Close dropdown if clicked outside
 document.addEventListener("click", (e) => {
   if (!e.target.closest(".dropdown-wrapper")) {
     dropdownMenu.classList.add("hidden");
   }
 });
 
-// Flip Board Button
 document.getElementById("flip-board-btn").addEventListener("click", () => {
   const currentOri = board.getOrientation();
   board.setOrientation(currentOri === COLOR.white ? COLOR.black : COLOR.white, true);
   dropdownMenu.classList.add("hidden"); // close menu after clicking
 });
 
-// offline button
+//offline button
 document.getElementById("btn-offline").addEventListener("click", (e) => {
   const button = e.currentTarget;
 
@@ -145,8 +209,6 @@ document.getElementById("btn-online").addEventListener("click", (e) => {
     button.classList.remove("pressed");
   }, 150);
 });
-
-// Game Logic below
 
 function updateStatus() {
   if (gameMode === 'online' && !isConnected) {
