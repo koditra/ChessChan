@@ -1,11 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 import {
   getAuth,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-
-import {
-  getAuth,
   onAuthStateChanged,
   signOut
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
@@ -23,26 +18,41 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+const userNameEl = document.getElementById("user-name");
+const userNameHomeEl = document.getElementById("user-name-home");
+const userAvatarEl = document.getElementById("user-avatar");
+const userAvatarHomeEl = document.getElementById("user-avatar-home");
+
 onAuthStateChanged(auth, (user) => {
   if (!user) {
-    window.location.href = "login.html";
+    window.location.href = "index.html";
     return;
   }
 
   const name = user.displayName || "Guest";
   const photo = user.photoURL || "https://placehold.co/48x48?text=G";
 
-  document.getElementById("user-name").textContent = name;
-  document.getElementById("user-name-home").textContent = name;
-
-  document.getElementById("user-avatar").src = photo;
-  document.getElementById("user-avatar-home").src = photo;
+  if (userNameEl) userNameEl.textContent = name;
+  if (userNameHomeEl) userNameHomeEl.textContent = name;
+  if (userAvatarEl) userAvatarEl.src = photo;
+  if (userAvatarHomeEl) userAvatarHomeEl.src = photo;
 });
 
-document.getElementById("logout-btn")?.addEventListener("click", async () => {
-  await signOut(auth);
-  window.location.href = "login.html";
-});
+const logoutBtn = document.getElementById("logout-btn");
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", async () => {
+    await signOut(auth);
+    window.location.href = "index.html";
+  });
+}
+
+const logoutBtnGame = document.getElementById("logout-btn-game");
+if (logoutBtnGame) {
+  logoutBtnGame.addEventListener("click", async () => {
+    await signOut(auth);
+    window.location.href = "index.html";
+  });
+}
 
 import { Chess } from "chess.js";
 import { Chessboard, INPUT_EVENT_TYPE, COLOR } from "cm-chessboard/src/Chessboard.js";
