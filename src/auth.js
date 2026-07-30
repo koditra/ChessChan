@@ -22,6 +22,15 @@ const auth = getAuth(app);
 
 const googleProvider = new GoogleAuthProvider();
 
+function setProfileCookie(profile) {
+    const value = encodeURIComponent(JSON.stringify(profile));
+    document.cookie = `chesschan-profile=${value}; path=/; max-age=31536000; SameSite=Lax`;
+}
+
+function clearProfileCookie() {
+    document.cookie = "chesschan-profile=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+}
+
 const googleLoginBtn = document.getElementById("google-login");
 if (googleLoginBtn) {
     googleLoginBtn.addEventListener("click", async () => {
@@ -47,7 +56,13 @@ if (guestLoginBtn) {
 onAuthStateChanged(auth, (user) => {
     if (!user) return;
 
-    console.log("Logged in as:", user.displayName ?? "Guest");
+    const profile = {
+        name: user.displayName || user.email?.split("@")[0] || "Guest",
+        photo: user.photoURL || "https://placehold.co/48x48?text=G"
+    };
+
+    setProfileCookie(profile);
+    console.log("Logged in as:", profile.name);
 
     window.location.href = "play.html";
 });
